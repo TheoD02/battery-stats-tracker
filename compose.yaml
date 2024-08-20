@@ -39,9 +39,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.network=traefik"
-      - "traefik.http.routers.php-mantine-starter-kit.rule=Host(`mantine-starter-kit.web.localhost`)"
-      - "traefik.http.routers.php-mantine-starter-kit.tls=true"
-      - "traefik.http.services.php-mantine-starter-kit.loadbalancer.server.port=80"
+      - "traefik.http.routers.php-battery-stats-tracker.rule=Host(`battery-stats-tracker.web.localhost`)"
+      - "traefik.http.routers.php-battery-stats-tracker.tls=true"
+      - "traefik.http.services.php-battery-stats-tracker.loadbalancer.server.port=80"
     networks:
       - database
       - traefik
@@ -55,7 +55,7 @@ services:
   #  command: php /app/bin/console messenger:consume scheduler_default -vv
 
   mariadb:
-    image: mariadb:10.5
+    image: mariadb:11.5
     ports:
       - "3351:3306"
     environment:
@@ -75,9 +75,9 @@ services:
       - ./:/docs
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mkdocs-mantine-starter-kit.rule=Host(`mantine-starter-kit.docs.localhost`)"
-      - "traefik.http.routers.mkdocs-mantine-starter-kit.tls=true"
-      - "traefik.http.services.mkdocs-mantine-starter-kit.loadbalancer.server.port=8000"
+      - "traefik.http.routers.mkdocs-battery-stats-tracker.rule=Host(`battery-stats-tracker.docs.localhost`)"
+      - "traefik.http.routers.mkdocs-battery-stats-tracker.tls=true"
+      - "traefik.http.services.mkdocs-battery-stats-tracker.loadbalancer.server.port=8000"
     networks:
       - traefik
     profiles:

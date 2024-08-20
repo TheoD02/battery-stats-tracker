@@ -4,11 +4,11 @@
 
 This document provides a comprehensive guide on managing and declaring API calls in the project. It covers the following topics:
 
-1. **API Client Configuration**: The [`api/client.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/client.tsx) file is responsible for creating and configuring the HTTP client that will be used to make requests to the API. It uses the [`openapi-fetch`](https://github.com/drwpow/openapi-typescript/tree/main/packages/openapi-fetch) library to create a client that is compatible with OpenAPI specifications.
+1. **API Client Configuration**: The [`api/client.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/client.tsx) file is responsible for creating and configuring the HTTP client that will be used to make requests to the API. It uses the [`openapi-fetch`](https://github.com/drwpow/openapi-typescript/tree/main/packages/openapi-fetch) library to create a client that is compatible with OpenAPI specifications.
 
-2. **Endpoint Declaration**: For each scope of the API, a separate file is created that exports an object containing the endpoints for that scope. These are then combined into a global [`api/endpoints.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/endpoints.tsx) file.
+2. **Endpoint Declaration**: For each scope of the API, a separate file is created that exports an object containing the endpoints for that scope. These are then combined into a global [`api/endpoints.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/endpoints.tsx) file.
 
-3. **Query Key Declaration**: Similar to endpoints, keys for the queries for each scope are declared in separate files and then combined into a global [`api/keys.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/keys.tsx) file.
+3. **Query Key Declaration**: Similar to endpoints, keys for the queries for each scope are declared in separate files and then combined into a global [`api/keys.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/keys.tsx) file.
 
 4. **Using Mutations**: Mutations are used to modify data on the server. Custom hooks that use the `useMutation` hook from [`@tanstack/react-query`](https://tanstack.com/query/latest/docs/framework/react/overview) are defined for each mutation.
 
@@ -18,19 +18,19 @@ This document provides a comprehensive guide on managing and declaring API calls
 
 The document also explains the benefits of using [`openapi-typescript`](https://github.com/drwpow/openapi-typescript) to generate types, which include type safety, autocompletion, documentation, up-to-date types, and reduced boilerplate.
 
-### All call are based on [`api/client.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/client.tsx)
+### All call are based on [`api/client.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/client.tsx)
 
-The [`client.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/client.tsx) file is responsible for creating and configuring the HTTP client that will be used to make requests to the API. It uses the [`openapi-fetch`](https://github.com/drwpow/openapi-typescript/tree/main/packages/openapi-fetch) library to create a client that is compatible with OpenAPI specifications.
+The [`client.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/client.tsx) file is responsible for creating and configuring the HTTP client that will be used to make requests to the API. It uses the [`openapi-fetch`](https://github.com/drwpow/openapi-typescript/tree/main/packages/openapi-fetch) library to create a client that is compatible with OpenAPI specifications.
 
 The client is configured with a base URL, default headers, and a query serializer. The base URL is the root URL of the API. The headers include a `Content-Type` of `application/ld+json`. The query serializer is a function that formats query parameters into a string. It uses the `query-string` library to do this.
 
 The client also uses a middleware, `throwOnError`, which throws an error if the response status is 400 or above. This is a way to handle HTTP errors globally.
 
-See the file [api/client.tsx](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/client.tsx) for more details.
+See the file [api/client.tsx](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/client.tsx) for more details.
 
-### Declaring [`endpoints.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/tracks/endpoints.tsx) for Each Scope of API
+### Declaring [`endpoints.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/tracks/endpoints.tsx) for Each Scope of API
 
-For each scope of the API, you should create a separate file that exports an object containing the endpoints for that scope. For example, for the `tracks` scope, you would create a [`api/tracks/endpoints.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/tracks/endpoints.tsx) file that exports an object like this:
+For each scope of the API, you should create a separate file that exports an object containing the endpoints for that scope. For example, for the `tracks` scope, you would create a [`api/tracks/endpoints.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/tracks/endpoints.tsx) file that exports an object like this:
 
 ```typescript
 export const trackEndpoints = {
@@ -45,7 +45,7 @@ export const trackEndpoints = {
 };
 ```
 
-Then, in the global [`api/endpoints.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/endpoints.tsx) file, you would import all of these objects and combine them into one object that you export:
+Then, in the global [`api/endpoints.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/endpoints.tsx) file, you would import all of these objects and combine them into one object that you export:
 
 ```typescript
 import { trackEndpoints } from "./tracks/endpoints.tsx";
@@ -55,9 +55,9 @@ export const endpoints = {
 };
 ```
 
-### Declaring Keys for Queries for Each Scope and Regrouping Them into [`keys.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/tracks/keys.tsx) Globally
+### Declaring Keys for Queries for Each Scope and Regrouping Them into [`keys.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/tracks/keys.tsx) Globally
 
-For each scope of the API, you should create a separate file that exports an object containing the keys for the queries for that scope. For example, for the `tracks` scope, you would create a [`api/tracks/keys.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/tracks/keys.tsx) file that exports an object like this:
+For each scope of the API, you should create a separate file that exports an object containing the keys for the queries for that scope. For example, for the `tracks` scope, you would create a [`api/tracks/keys.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/tracks/keys.tsx) file that exports an object like this:
 
 ```typescript
 import { trackEndpoints } from "./endpoints.tsx";
@@ -68,7 +68,7 @@ export const tracksKeys = {
 };
 ```
 
-Then, in the global [`api/keys.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/keys.tsx) file, you would import all of these objects and combine them into one object that you export:
+Then, in the global [`api/keys.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/keys.tsx) file, you would import all of these objects and combine them into one object that you export:
 
 ```typescript
 import { tracksKeys } from "./tracks/keys.tsx";
@@ -80,7 +80,7 @@ export const keys = {
 
 ### Using Mutations
 
-Mutations are used to modify data on the server. In the [`api/tracks/mutations.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/tracks/mutations.tsx) file, there are two mutations defined: `useAnalyzeTrack` and `useScanDirectory`. These are custom hooks that use the `useMutation` hook from [`@tanstack/react-query`](https://tanstack.com/query/latest/docs/framework/react/overview).
+Mutations are used to modify data on the server. In the [`api/tracks/mutations.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/tracks/mutations.tsx) file, there are two mutations defined: `useAnalyzeTrack` and `useScanDirectory`. These are custom hooks that use the `useMutation` hook from [`@tanstack/react-query`](https://tanstack.com/query/latest/docs/framework/react/overview).
 
 To use these mutations, you would call the hook and then call the returned mutate function with the appropriate parameters. For example:
 
@@ -91,7 +91,7 @@ mutation.mutate({ id: 'track-id' });
 
 ### Using Queries
 
-Queries are used to fetch data from the server. In the [`api/tracks/queries.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/tracks/queries.tsx) file, there are two queries defined: `usePaginatedTracks` and `useGetOneTrack`. These are custom hooks that use the `useQuery` hook from [`@tanstack/react-query`](https://tanstack.com/query/latest/docs/framework/react/overview).
+Queries are used to fetch data from the server. In the [`api/tracks/queries.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/tracks/queries.tsx) file, there are two queries defined: `usePaginatedTracks` and `useGetOneTrack`. These are custom hooks that use the `useQuery` hook from [`@tanstack/react-query`](https://tanstack.com/query/latest/docs/framework/react/overview).
 
 To use these queries, you would call the hook and then access the returned data. For example:
 
@@ -109,7 +109,7 @@ To generate the types, you can run the `castor ui:http:schema` task, which is de
 Alternatively, you can run the [`openapi-typescript`](https://github.com/drwpow/openapi-typescript) command directly with the following parameters:
 
 ```bash
-npx openapi-typescript http://mantine-starter-kit.web.localhost/api/docs.json -o ./src/api/schema.d.ts
+npx openapi-typescript http://battery-stats-tracker.web.localhost/api/docs.json -o ./src/api/schema.d.ts
 ```
 
 This will generate a `schema.d.ts` file in the `src/api` directory with the TypeScript types for the API.
@@ -135,11 +135,11 @@ The [`openapi-typescript`](https://github.com/drwpow/openapi-typescript) library
 
 Here are some best practices for managing API calls in the project:
 
-1. **Modularize API Endpoints**: Keep endpoints for each API scope in separate files. Combine them in a global [`api/endpoints.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/endpoints.tsx) file.
+1. **Modularize API Endpoints**: Keep endpoints for each API scope in separate files. Combine them in a global [`api/endpoints.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/endpoints.tsx) file.
 
-2. **Centralize API Client Configuration**: Manage all API client configurations in the [`api/client.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/client.tsx) file.
+2. **Centralize API Client Configuration**: Manage all API client configurations in the [`api/client.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/client.tsx) file.
 
-3. **Use Query Keys**: Declare keys for queries for each scope in separate files and combine them in a global [`api/keys.tsx`](https://github.com/TheoD02/mantine-starter-kit/blob/feat/base/app/assets/src/api/keys.tsx) file.
+3. **Use Query Keys**: Declare keys for queries for each scope in separate files and combine them in a global [`api/keys.tsx`](https://github.com/TheoD02/battery-stats-tracker/blob/feat/base/app/assets/src/api/keys.tsx) file.
 
 4. **Use Custom Hooks for Mutations and Queries**: Define mutations and queries using custom hooks that use the `useMutation` and `useQuery` hooks from [`@tanstack/react-query`](https://tanstack.com/query/latest/docs/framework/react/overview).
 

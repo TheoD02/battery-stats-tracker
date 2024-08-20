@@ -86,19 +86,19 @@ function install(bool $force = false): void
     io()->section('QA tools');
     qa()->install();
 
-    io()->section('NPM');
-    $forceNodeModules = $force || !is_dir(context()->workingDirectory . '/node_modules');
-    if (!delayed_fingerprint(
-        callback: static fn() => pnpm()->install()->run(),
-        fingerprint: static fn() => fgp()->npm(),
-        force: $forceNodeModules || $force
-    )) {
-        io()->note('NPM dependencies are already installed.');
-    } else {
-        io()->success('NPM dependencies installed');
-    }
-
-    pnpm()->add('run', 'build')->run();
+//    io()->section('NPM');
+//    $forceNodeModules = $force || !is_dir(context()->workingDirectory . '/node_modules');
+//    if (!delayed_fingerprint(
+//        callback: static fn() => pnpm()->install()->run(),
+//        fingerprint: static fn() => fgp()->npm(),
+//        force: $forceNodeModules || $force
+//    )) {
+//        io()->note('NPM dependencies are already installed.');
+//    } else {
+//        io()->success('NPM dependencies installed');
+//    }
+//
+//    pnpm()->add('run', 'build')->run();
 
     db_reset();
 
@@ -281,7 +281,7 @@ function ui_http_schema(): void
             'app',
             'npx',
             'openapi-typescript',
-            'http://mantine-starter-kit.web.localhost/api/docs.json',
+            'http://battery-stats-tracker.web.localhost/api/docs.json',
             '-o',
             './src/api/schema.d.ts'
         )
@@ -292,17 +292,17 @@ function ui_http_schema(): void
 function db_reset(): void
 {
     // Check if the database app exists
-    $output = docker(context()->withQuiet())->compose(
-        'exec -it mariadb sh -c "mysql -uroot -proot -e \"SHOW DATABASES\""'
-    )->run()->getOutput();
-    if (str_contains($output, 'app')) {
-        if (io()->confirm('The database "app" already exists. Do you want to drop it?', false) === false) {
-            return;
-        }
-    }
+//    $output = docker(context()->withQuiet())->compose(
+//        'exec -it mariadb sh -c "mysql -uroot -proot -e \"SHOW DATABASES\""'
+//    )->run()->getOutput();
+//    if (str_contains($output, 'app')) {
+//        if (io()->confirm('The database "app" already exists. Do you want to drop it?', false) === false) {
+//            return;
+//        }
+//    }
 
     symfony()->console('doctrine:database:drop', '--force', '--if-exists')->run();
     symfony()->console('doctrine:database:create')->run();
     symfony()->console('doctrine:schema:update', '--force')->run();
-    symfony()->console('doctrine:fixtures:load', '--no-interaction')->run();
+//    symfony()->console('doctrine:fixtures:load', '--no-interaction')->run();
 }

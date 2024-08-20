@@ -3,15 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-
-auth:
-    path: /auth
-    methods: ['POST']
-
-react:
-    path: /{path?}
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-    defaults:
-        template: base.html.twig
-    requirements:
-        path: '^(?!api).*$'
