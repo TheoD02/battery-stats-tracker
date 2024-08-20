@@ -10,6 +10,6 @@ jobs:
       - uses: masterjanic/docker-compose-ssh-deployment@master
         name: Docker-Compose Remote Deployment
         with:
-          ssh_host: your-remote-server.com
+          ssh_host: ${{ secrets.SSH_HOST }}
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh_user: ${{ secrets.SSH_USER }}
