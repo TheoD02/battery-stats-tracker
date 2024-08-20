@@ -1,0 +1,54 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+      target: dev
+    environment:
+      SERVER_NAME: ":80"
+      MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost}|php$$
+      # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
+      MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
+      MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
+      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+    volumes:
+      - ./app:/app
+      - ./tools:/tools
+      - ./.castor:/.castor
+      - ~/.ssh:/home/www-data/.ssh:ro
+      - user_data:/home/www-data
+    networks:
+      - database
+
+  mariadb:
+    image: mariadb:11.5
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - database
+
+  mkdocs:
+    build:
+      dockerfile: ./.docker/mkdocs/Dockerfile
+      context: .
+    volumes:
+      - ./:/docs
+
+networks:
+  database:
+
+# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
+
+volumes:
+  g4f_cookies:
+  user_data:
+  mariadb:
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
